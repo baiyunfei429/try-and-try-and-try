@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>flexDemo</title>
+  <style>
+    .flex-wrap {
+      display: -webkit-flex;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .flex-item {
+      width: 400px;
+      height: 400px;
+      background: #888;
+      margin-top: 60px;
+      margin-bottom: 60px;
+    }
+    .triangle {
+      width: 0;
+      height: 0;
+      border-left: 50px solid transparent;
+      border-right: 50px solid transparent;
+      border-bottom: 100px solid red;
+    }
+  </style>
+</head>
+<body>
+  <div class="triangle"></div>
+  <!-- <div class="flex-wrap">
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+    <div class="flex-item"></div>
+  </div> -->
+</body>
+<script>
+  // var _marginLR = 0;
+
+  // window.onload = function() {
+  //   initData();
+  //   setAttributeForFlexItem_01();
+  // }
+  // window.onresize = function() {
+  //   initData();
+  //   setAttributeForFlexItem_01();
+  // }
+
+  // function initData() {
+  //   var _bodyWidth = document.getElementsByTagName('body')[0].offsetWidth;
+  //   var _itemWidth = 400;
+  //   var _minMarinLR = 20;
+    
+  //   var _ItemNum = Math.floor((_bodyWidth - _minMarinLR * 4) / 400);
+  //   _marginLR = Math.floor((_bodyWidth - _itemWidth * _ItemNum) / (_ItemNum * 2));
+  // }
+
+  // // 方案一：动态设置setAttribute
+  // function setAttributeForFlexItem_01() {
+  //   var _flexItem = document.getElementsByClassName('flex-item');
+  //   for(var i = 0; i < _flexItem.length; i ++) {
+  //     _flexItem[i].setAttribute('style', '\
+  //       margin-left: ' + _marginLR + 'px;\
+  //       margin-right: ' + _marginLR + 'px;'
+  //     );
+  //   }
+  // } 
+   
+  // // 方案二：（暂未实现）
+  // // 方案三可作为方案二的实现之一，或者说方案三是一种比二更好的方式
+  // // 作为优化，不过没有实现。优化点：不使用for循环
+  // // 通过父元素，定位className="flex-item",去设置style，而不是去直接循环子元素
+  // function setAttributeForFlexItem_02() {
+  //   var _flexWrap = document.getElementsByClassName('flex-wrap');
+  //   // _flexWrap.setAttribute('style', '\
+  //   //   margin-left: ' + _marginLR + 'px;\
+  //   //   margin-right: ' + _marginLR + 'px;'
+  //   // );
+  // }  
+  
+  // // 方案三：动态添加stlye
+  // function setAttributeForFlexItem_03() {
+  // /**
+  //   * 动态添加 CSS 样式
+  //   * @param selector {string} 选择器
+  //   * @param rules    {string} CSS样式规则
+  //   * @param index    {number} 插入规则的位置, 靠后的规则会覆盖靠前的
+  //   */
+  //   var addCssRule = function() {
+  //     // 创建一个 style， 返回其 stylesheet 对象
+  //     // 注意：IE6/7/8中使用 style.stylesheet，其它浏览器 style.sheet
+  //     function createStyleSheet() {
+  //       var head = document.head || document.getElementsByTagName('head')[0];
+  //       var style = document.createElement('style');
+  //       style.type = 'text/css';
+  //       head.appendChild(style);
+  //       return style.sheet ||style.styleSheet;
+  //     }
+
+  //     // 创建 stylesheet 对象
+  //     var sheet = createStyleSheet();
+
+  //     // 返回接口函数
+  //     return function(selector, rules, index) {
+  //       index = index || 0;
+  //         if (sheet.insertRule) {
+  //             sheet.insertRule(selector + "{" + rules + "}", index);  
+  //         } else if (sheet.addRule) {
+  //             sheet.addRule(selector, rules, index);  
+  //         }
+  //     }
+  //   }();
+
+  //   addCssRule('.flex-item', 'margin-left: ' + _marginLR + 'px;margin-right: ' + _marginLR + 'px;');
+  // }  
+
+</script>
+</html>
