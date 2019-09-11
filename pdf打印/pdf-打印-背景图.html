@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>js打印背景图</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrap {
+      position: relative;
+      text-align: right;
+      padding: 50px;
+    }
+
+    .office {
+      position: absolute;
+      right: 50px;
+      bottom: 10px;
+      width: 150px;
+      height: 150px;
+      background-image: url(./打印-页面模型.png);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        -moz-print-color-adjust: exact;
+        -ms-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      button {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <p>dsfsdfsdf</p>
+    <p>dsfsdfsdf</p>
+    <p>dsfsdfsdf</p>
+    <p>dsfsdfsdf</p>
+    <p>dsfsdfsdf</p>
+    <p>dsfsdfsdf</p>
+    <p>dsfsdfsdf</p>
+    <p>dsfsdfsdf</p>
+    <p>dsfsdfsdf</p>
+    <p>dsfsdfsdf</p>
+    <div class="office"></div>
+  </div>
+  <p style="text-align:right;margin:100px 50px 0 0;"><button onclick="printPage()">打印</button></p>
+  <script type="text/javascript">
+    function printPage() {
+      var office = document.getElementsByClassName('office')[0];
+      var imgs = office.getElementsByTagName('img');
+      var img, src;
+      if (!imgs.length) {
+        src = window.getComputedStyle(office, null).getPropertyValue('background-image').replace(/(^url)|\(|\)|\"/g,
+        '');
+        img = document.createElement('img');
+        img.src = src;
+        img.height = 150;
+        img.width = 150;
+        office.style.backgroundImage = 'none';
+        office.appendChild(img);
+      }
+      window.print();
+      //取消打印还原
+      setTimeout(function () {
+        office.removeChild(img);
+        office.style.backgroundImage = 'url("' + src + '")';
+      }, 100)
+    }
+  </script>
+</body>
+
+</html>
+<!-- 
+————————————————
+版权声明：本文为CSDN博主「lidysun」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/lidysun/article/details/88995208 
+-->

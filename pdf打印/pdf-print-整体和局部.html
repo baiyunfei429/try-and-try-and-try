@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>局部打印案例</title>
+  <script type="text/javascript">
+    /*
+  JS实现打印的方式
+  方式一：window.print()
+  window.print();会弹出打印对话框，打印的是window.document.body.innerHTML中的内容
+  1.整体打印
+  window.print();简单的一行js代码即可搞定
+  2.局部打印
+  在html文档中要打印的标签前加上‘<!--startprint-->’，标签后加上‘’<!--endprint-->即可
+  3.局部打印指定部分之外的内容
+  其实原理也很简单，就是在打印前将指定部分隐藏，打印后再将指定的部分显示出来
+  $('#print3').click(function(){
+    $('p').hide();
+    window.print();
+    $('p').show();
+  });
+　这段代码就是打印除p之外的部分了
+  或者更高级的一种写法：
+  <!--startprint-->
+    <div class="content">
+      <button class="noprint">预览</button>
+      <button class="noprint">打印</button>
+        这里是需要打印的内容
+          .....
+    </div>
+  <!--endprint-->
+  如果要过滤的话可以做下面的样式设置:
+    <style type="text/css">
+      @media print {
+        .noprint{
+          display: none;
+        }
+      }
+    </style>
+  或者下面这种写法：
+     <style type="text/css" media="print">
+        .noprint{
+          display: none;
+        }
+      </style> 
+  */
+    function doPrint() {
+      console.log('baiyun')
+      bdhtml = window.document.body.innerHTML;
+      sprnstr = "<!--startprint-->"; //开始打印标识字符串有17个字符
+      eprnstr = "<!--endprint-->"; //结束打印标识字符串
+      prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17); //从开始打印标识之后的内容
+      prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+      window.document.body.innerHTML = prnhtml; //把需要打印的指定内容赋给body.innerHTML
+      window.print(); //调用浏览器的打印功能打印指定区域
+      window.document.body.innerHTML = bdhtml; // 最后还原页面
+    }
+  </script>
+</head>
+
+<body>
+  <p>1不需要打印的地方</p>
+  <p>2这里不要打印啊</p>
+  <!--startprint-->
+  <!--注意要加上html里star和end的这两个标记-->
+  <h1>打印标题</h1>
+  <p>打印内容~~</p>
+  <!--endprint-->
+  <button type="button" onclick="doPrint()">打印</button>
+  <p>不打印的地方啊哈哈哈哈</p>
+  <p>2</p>
+</body>
+
+</html>

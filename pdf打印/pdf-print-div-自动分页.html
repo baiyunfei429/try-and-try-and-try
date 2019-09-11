@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./for-print.css">
+  <title>打印</title>
+  <script src="../lib/jquery-3.4.1.slim.min.js"></script>
+  <script src="../lib/jquery.jqprint-0.3.js"></script>
+  <!-- <script src="../lib/jquery-migrate-1.2.1.min.js"></script> -->
+  <!-- <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> -->
+  <style>
+    /*
+    奇了怪了，使用jqprint时，这种嵌入<style><style/>的写法就不好使，必须使用link标签引用的css样式
+    */
+
+    /* html, body, ul, li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .item {
+      height: 300px;
+      width: 100%;
+      margin: 0 auto;
+      border: 1px solid #aaa;
+    }
+    .print-button {
+      display: block;
+      margin: 40px auto;
+      padding: 20px 80px;
+    } */
+  </style>
+</head>
+<body>
+  <div class="print">
+    <!--startprint-->
+    <ul>
+      <li class="item">列表内容1</li>
+      <li class="item">列表内容2</li>
+      <li class="item" style="page-break-after:always;">列表内容3</li>
+      <li class="item">列表内容4</li>
+      <li class="item" style="page-break-after:always;">列表内容5</li>
+      <li class="item">列表内容6</li>
+      <li class="item">列表内容7</li>
+      <li class="item">列表内容8</li>
+      <li class="item">列表内容9</li>
+      <li class="item">列表内容0</li>
+      <li class="item">列表内容1</li>
+      <li class="item">列表内容2</li>
+      <li class="item">列表内容3</li>
+      <li class="item">列表内容4</li>
+      <li class="item">列表内容5</li>
+      <li class="item">列表内容6</li>
+      <li class="item">列表内容7</li>
+      <li class="item">列表内容8</li>
+      <li class="item">列表内容9</li>
+      <li class="item">列表内容0</li>
+    </ul>
+    <!--endprint-->
+    <button class="print-button" onclick="doPrint()">打印</button>
+    <button class="print-button" onclick="doJQPrint()">打印-jquery-print</button>
+  </div>
+  <script>
+    jQuery.browser={};
+    (function(){
+      jQuery.browser.msie=false; 
+      jQuery.browser.version=0;
+      if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ 
+        jQuery.browser.msie=true;
+        jQuery.browser.version=RegExp.$1;
+      }
+    })();	
+    /*
+    分页打印
+    使用 window.print() 打印时，如果内容超出会自动分页。
+
+    但是我们如果需要自定义分页范围，如碰到表格分页打印，可以进行如下设置：
+    <table width="100%"  border="0" cellpadding="0" cellspacing="0"  style="page-break-after:always" > 
+    </table>
+    */
+    function doPrint() {
+      bdhtml = window.document.body.innerHTML;
+      sprnstr = "<!--startprint-->"; //开始打印标识字符串有17个字符
+      eprnstr = "<!--endprint-->"; //结束打印标识字符串
+      prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17); //从开始打印标识之后的内容
+      prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+      window.document.body.innerHTML = prnhtml; //把需要打印的指定内容赋给body.innerHTML
+      window.print(); //调用浏览器的打印功能打印指定区域
+      window.document.body.innerHTML = bdhtml; // 最后还原页面
+    }
+
+    function doJQPrint() {
+      $('.print').jqprint({
+        // 感觉下面这几个属性没有什么卵用啊
+        // debug: false, //如果是true则可以显示iframe查看效果（iframe默认高和宽都很小，可以再源码中调大），默认是false
+        // importCSS: true, //true表示引进原来的页面的css，默认是true。（如果是true，先会找$("link[media=print]")，若没有会去找$("link")中的css文件）
+        // printContainer: true, //表示如果原来选择的对象必须被纳入打印（注意：设置为false可能会打破你的CSS规则）。
+        // operaSupport: true//表示如果插件也必须支持歌opera浏览器，在这种情况下，它提供了建立一个临时的打印选项卡。默认是true
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>打印</title>
+  <script src="../lib/jquery-3.4.1.slim.min.js"></script>
+  <script src="../lib/jquery.jqprint-0.3.js"></script>
+  <style>
+    html, body {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .item {
+      height: 300px;
+      width: 100%;
+      margin: 0 auto;
+      border: 1px solid #aaa;
+    }
+    .print-button {
+      display: block;
+      margin: 40px auto;
+      padding: 20px 80px;
+    }
+  </style>
+</head>
+<body>
+  <div class="print">
+    <!--startprint-->
+    <table width="100%"  border="1" cellpadding="0" cellspacing="0"  style="page-break-after:always" >
+      <tr class="item">
+        <td>白云飞1</td>
+        <td>白云飞2</td>
+        <td>白云飞3</td>
+        <td>白云飞4</td>
+        <td>白云飞5</td>
+        <td>白云飞6</td>
+        <td>白云飞7</td>
+      </tr>
+      <tr class="item">
+        <td>白云飞2</td>
+        <td>白云飞2</td>
+        <td>白云飞3</td>
+        <td>白云飞4</td>
+        <td>白云飞5</td>
+        <td>白云飞6</td>
+        <td>白云飞7</td>
+      </tr>
+      <tr class="item">
+        <td>白云飞3</td>
+        <td>白云飞2</td>
+        <td>白云飞3</td>
+        <td>白云飞4</td>
+        <td>白云飞5</td>
+        <td>白云飞6</td>
+        <td>白云飞7</td>
+      </tr>
+      <tr class="item">
+        <td>白云飞4</td>
+        <td>白云飞2</td>
+        <td>白云飞3</td>
+        <td>白云飞4</td>
+        <td>白云飞5</td>
+        <td>白云飞6</td>
+        <td>白云飞7</td>
+      </tr>
+      <tr class="item">
+        <td>白云飞5</td>
+        <td>白云飞2</td>
+        <td>白云飞3</td>
+        <td>白云飞4</td>
+        <td>白云飞5</td>
+        <td>白云飞6</td>
+        <td>白云飞7</td>
+      </tr>
+      <tr class="item">
+        <td>白云飞6</td>
+        <td>白云飞2</td>
+        <td>白云飞3</td>
+        <td>白云飞4</td>
+        <td>白云飞5</td>
+        <td>白云飞6</td>
+        <td>白云飞7</td>
+      </tr>
+    </table>
+    <!--endprint-->
+    <button class="print-button" onclick="doPrint()">打印</button>
+  </div>
+  <script>
+    /*
+    分页打印
+    使用 window.print() 打印时，如果内容超出会自动分页。
+
+    但是我们如果需要自定义分页范围，如碰到表格分页打印，可以进行如下设置：
+    <table width="100%"  border="0" cellpadding="0" cellspacing="0"  style="page-break-after:always" > 
+    </table>
+    */
+    function doPrint() {
+      bdhtml = window.document.body.innerHTML;
+      sprnstr = "<!--startprint-->"; //开始打印标识字符串有17个字符
+      eprnstr = "<!--endprint-->"; //结束打印标识字符串
+      prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17); //从开始打印标识之后的内容
+      prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+      window.document.body.innerHTML = prnhtml; //把需要打印的指定内容赋给body.innerHTML
+      window.print(); //调用浏览器的打印功能打印指定区域
+      window.document.body.innerHTML = bdhtml; // 最后还原页面
+    }
+  </script>
+</body>
+</html>

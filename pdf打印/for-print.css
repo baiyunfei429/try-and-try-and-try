@@ -1,0 +1,19 @@
+html, body, ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.item {
+  height: 100px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #aaa;
+}
+.print-button {
+  display: block;
+  margin: 40px auto;
+  padding: 20px 80px;
+}
+@page { 
+  margin: 0; 
+}

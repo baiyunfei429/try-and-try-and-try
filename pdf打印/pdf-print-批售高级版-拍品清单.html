@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>打印</title>
+  <style>
+    @page {
+      margin: 0;
+    }
+    html, body, ul, li, p {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .print {
+      margin: 30px auto;
+      overflow: hidden;
+      width: 770px;
+      height: 544px;
+      border: 1px solid #f00;
+    }
+    .print-button {
+      display: block;
+      margin: 40px auto;
+      padding: 20px 80px;
+    }
+    .title {
+      text-align: center;
+      height: 60px;
+      line-height: 60px;
+    }
+    .description {
+      height: 158px;
+      padding: 10px 20px;
+      border: 1px solid #aaa;
+    }
+    .item {
+      height: 48px;
+      width: 100%;
+      margin: 0 auto;
+      border: 1px solid #aaa;
+      border-top: 0;
+    }
+    .flex-content {
+      height: 48px;
+      width: 100%;
+      display: flex;
+    }
+    .table-header {
+      width: 50%;
+      background-color: #f2f2f2;
+      border-left: 1px solid #aaa;
+      border-bottom: 1px solid #aaa;
+    }
+    .only-show-in-print {
+      display: none;
+    }
+    @media print { 
+      @page { 
+        /* 设置为横向打印 */ 
+        /* 
+        size: landscape;
+        */ 
+      }
+      body {
+        -webkit-print-color-adjust: exact;
+        -moz-print-color-adjust: exact;
+        -ms-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .only-show-in-print { 
+        display: block; 
+      }
+      .flex-content {
+        display: flex;
+      }
+      .table-header {
+        width: 50%;
+        background-color: #f2f2f2;
+        border-left: 1px solid #aaa;
+        border-bottom: 1px solid #aaa;
+      }
+    } 
+  </style>
+</head>
+<body>
+  <div class="print">
+    <!--startprint-->
+    <ul>
+      <li class="title">
+        2019/09/11 车易拍二手车拍卖
+      </li>
+      <li class="description">
+        <p>1.服务保障</p>
+        <p>1.服务费不超过80%</p>
+        <p>1.详情到店咨询</p>
+        <p>1.服务保障服务保障服务保障服务保障服务保障服务保障服务保障服务保障服务保障</p>
+      </li>
+      <li class="flex-content">
+        <span class="table-header">序号</span>
+        <span class="table-header">车牌号</span>
+        <span class="table-header">车型</span>
+      </li>
+      <li class="item">列表内容1</li>
+      <li class="item">列表内容2</li>
+
+      <li class="item" style="page-break-after:always;">列表内容3</li>
+      <li class="item flex-content only-show-in-print">
+        <span class="table-header">序号</span>
+        <span class="table-header">车牌号</span>
+        <span class="table-header">车型</span>
+      </li>
+      <li class="item">列表内容4</li>
+      <li class="item" style="page-break-after:always;">列表内容5</li>
+      <li class="flex-content only-show-in-print">
+        <span class="table-header">序号</span>
+        <span class="table-header">车牌号</span>
+        <span class="table-header">车型</span>
+      </li>
+      <li class="item">列表内容6</li>
+      <li class="item">列表内容7</li>
+      <li class="item">列表内容8</li>
+      <li class="item">列表内容9</li>
+      <li class="item">列表内容0</li>
+      <li class="item">列表内容1</li>
+      <li class="item">列表内容2</li>
+      <li class="item">列表内容3</li>
+      <li class="item">列表内容4</li>
+      <li class="item">列表内容5</li>
+      <li class="item">列表内容6</li>
+      <li class="item">列表内容7</li>
+      <li class="item">列表内容8</li>
+      <li class="item">列表内容9</li>
+      <li class="item">列表内容9</li>
+      <li class="item">列表内容9</li>
+      <li class="item">列表内容9</li>
+      <li class="item">列表内容9</li>
+      <li class="item">列表内容91</li>
+      <li class="item">列表内容92</li>
+      <li class="item">列表内容93</li>
+      <li class="item" style="page-break-after:always;">列表内容0</li>
+      <li class="flex-content only-show-in-print">
+        <span class="table-header">序号</span>
+        <span class="table-header">车牌号</span>
+        <span class="table-header">车型</span>
+      </li>
+      <li class="item">列表内容6</li>
+      <li class="item">列表内容7</li>
+      <li class="item">列表内容8</li>
+      <li class="item">列表内容9</li>
+      <li class="item">列表内容0</li>
+      <li class="item">列表内容1</li>
+      <li class="item">列表内容2</li>
+      <li class="item">列表内容3</li>
+      <li class="item">列表内容4</li>
+      <li class="item">列表内容5</li>
+      <li class="item">列表内容6</li>
+      <li class="item">列表内容7</li>
+      <li class="item">列表内容8</li>
+      <li class="item">列表内容9</li>
+      <li class="item">列表内容0</li>
+    </ul>
+    <!--endprint-->
+  </div>
+  <button class="print-button" onclick="doPrint()">打印</button>
+  <script>
+    function doPrint() {
+      bdhtml = window.document.body.innerHTML;
+      sprnstr = "<!--startprint-->"; //开始打印标识字符串有17个字符
+      eprnstr = "<!--endprint-->"; //结束打印标识字符串
+      prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17); //从开始打印标识之后的内容
+      prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr)); //截取开始标识和结束标识之间的内容
+      window.document.body.innerHTML = prnhtml; //把需要打印的指定内容赋给body.innerHTML
+      window.print(); //调用浏览器的打印功能打印指定区域
+      window.document.body.innerHTML = bdhtml; // 最后还原页面
+    }
+
+  </script>
+</body>
+</html>

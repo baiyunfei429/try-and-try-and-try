@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script>
+    /*
+      作者：counterxing
+      链接：https://juejin.im/post/5c90d8085188252db75694dc
+      来源：掘金
+      著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+    */
+    /*
+      浏览器打印是一个很成熟的应用，最简单的打印直接调用window.print()或者是调用document.execCommand('print')。
+      此时，浏览器会弹出打印预览的窗口，通过页面生成了pdf用于打印预览
+
+      页面模型
+      和 CSS 盒子模型一样，页面盒子模型由外边距 (margin)、边框 (border)、内边距 (padding) 和 内容区域 (content area) 构成：
+      如图：打印-页面模型.png
+
+      有以下两点可以注意：
+      打印页面时，只打印出页面的内容区域
+      页面默认有页眉页脚信息，展现到页面外边距范围
+
+      默认情况下，页面是从左到右、从上到下展示，
+      如果需要更改打印设备的方向，可以通过设置根元素的 direction 和 writing-mode 属性来改变页面方向。
+
+      分页问题：
+      项目需求中首先遇到的问题是需要处理 Web打印 分页问题。即使该部分未占满一页纸的高度，也需要进行手动的分页。
+      起初，我通过计算页面每个部分的高度，在对应页面部分的节点的高度下方预留一部分的外边距来实现，
+      如下代码所示，通过查资料得知 A4纸的宽高比为 297 : 210 ，除去页面外边距（左右各 20mm ）来算得每一部分需要预留的高度：
+      const A4_HEIGHT_WIDTH_RATE = 297 / (210 - 2 * 13); // 打印区域长宽比：（A4纸高）比（A4纸宽减去左右侧20mm的边距）
+      const PAGE_WIDTH = 680; // 页面宽度（像素值）
+      const PAGE_HEIGHT = PAGE_WIDTH * A4_HEIGHT_WIDTH_RATE; // 页面高度
+
+      const $page1El = document.querySelector('.page1');
+      const page1Height = parseInt($page1El.clientHeight); // page1的高度是多少像素
+      const pageNum = Math.ceil(page1Height / PAGE_HEIGHT); // page1需要占多少页，超过1页的高度，就需要占2页，因此向上取整
+      const marginBottom = pageNum * PAGE_HEIGHT - page1Height; // 需要预留多少外边距
+      $page1El.style.marginBottom = `${marginBottom}px`;
+
+      但是，其实 CSS 早就支持了打印设备里的分页问题了，可以通过设置break-after: page; 或 page-break-after: always;
+      实现在打印设备的分页：
+      .page1 {
+        break-after: page;
+        page-break-after: always;
+      }
+
+      去除浏览器默认的页眉页底
+      实现分页的效果后，发现页面打印会在页底出现当前页面的 url,页面默认有页眉页脚信息，展现到页面外边距范围，
+      通过去除 页面模型 的外边距，使得内容不会延伸到页面的边缘，
+      再通过设置 body 元素的 margin 来保证 A4 纸打印出来的页面带有外边距：
+      @media print {
+        @page {
+          margin: 0;
+        }
+        body {
+          margin: 2cm;
+        }
+      }
+
+      构建自定义的页眉页底
+      通过将对应的页眉、页底元素的 position 设置为 fixed 可以固定对应节点到页面的任意一部分，它们也将在每个打印页面上重复。
+      .header {
+        position: fixed;
+        top: 0;
+      }
+      .footer {
+        position: fixed;
+        bottom: 0;
+      }
+
+    */
+  </script>
+</head>
+<body>
+    <div class="page1">
+        <div>我是第一页1</div>
+        <div>我是第一页2</div>
+        <div>我是第一页3</div>
+      </div>
+      <div class="page2">
+        <div>我是第二页1</div>
+        <div>我是第二页2</div>
+        <div>我是第二页3</div>
+      </div>
+      <div class="page3">
+        <div>我是第三页1</div>
+        <div>我是第三页2</div>
+        <div>我是第三页3</div>
+      </div>
+      <div class="page4">
+        <div>我是第四页1</div>
+        <div>我是第四页2</div>
+        <div>我是第四页3</div>
+      </div>
+      
+      
+</body>
+</html>
