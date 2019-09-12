@@ -1,0 +1,99 @@
+html {
+  height: 100%;
+  font-family: '微软雅黑',arial,helvetica,clean,sans-serif;
+  font-size: 50px;
+}
+
+body{
+  font-family: Microsoft YaHei, Source Sans Pro, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  height: 100%;
+  font-size: 12px;
+  -webkit-user-select:none;
+  user-select:none;
+}
+
+::-webkit-scrollbar { 
+  display: none; 
+}
+
+img {
+  max-width: 100%;
+}
+
+input, button {
+    outline: none;
+    border: 0;
+    background: transparent;
+}
+
+ul,li,ol{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+#app a {
+  text-decoration: none;
+}
+
+.clearfloat {
+  zoom:1;
+  margin-bottom: calc(1 * 20px);
+}
+.clearfloat::after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;}
+
+.fade {
+  opacity: 0;
+}
+
+.in {
+  opacity: 1;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.text-overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.fixheader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background:#fff;
+  text-align: center;
+  height: 45px;
+  line-height: 45px;
+  box-shadow: 0 1px 10px #e1e1e1;
+  font-size: 18px;
+  z-index: 9;
+}
+
+/* 
+  自定义字体
+ */
+@font-face{
+  /* font-family: 'DINAlternate-Bold';
+  src: url('/android_asset/DIN-Alternate-Bold.ttf'); */
+}

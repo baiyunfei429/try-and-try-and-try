@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>html2canvas-demo</title>
+  <script src="../lib/html2canvas.min.js"></script>
+  <style>
+    #view {
+      background: url('../pdf打印/car-icon.png');
+      /* background: #aaaaaa; */
+      background-size: 50%;
+      width: 500px;
+      height: 400px;
+    }
+    .doIt {
+      width: 80px;
+      padding: 20px 30px;
+      margin: 20px;
+      display: block;
+      cursor: pointer;
+      background: rgb(143, 58, 58);
+    }
+  </style>
+</head>
+<script type="text/javascript">
+  function takeScreenshot() {
+    /*
+    文章来源：https://segmentfault.com/a/1190000011478657
+    
+    1、基础的清晰度优化方案
+    其基本原理为：
+    将canvas的属性width和height属性放大为2倍（或者设置为devicePixelRatio倍），
+    最后将canvas的CSS样式width和height设置为原先1倍的大小。
+    2、进阶的清晰度优化方案
+      a).更改百分比布局为px布局（如果原先是百分比布局的话）
+      b).关闭canvas默认的抗锯齿设置
+      c).设置模糊元素的width和height为素材原有宽高，然后通过transform: scale进行缩放。这里scale的数值由具体需求决定。
+    基本原理
+      a).如果原来使用百分比设置元素宽高，请更改为px为单位的宽高，避免样式二次计算导致的模糊
+      b).默认情况下，canvas的抗锯齿是开启的，需要关闭抗锯齿来实现图像的锐化(MDN: imageSmoothingEnabled )
+      c).除了canvas可以通过扩大2倍宽高然后缩放至原有宽高来提高清晰度，对于DOM中其他的元素也可以使用css样式的scale来实现同样的缩放
+      convert2canvas() {
+
+        var cntElem = $('#j-sec-end')[0];
+
+        var shareContent = cntElem;//需要截图的包裹的（原生的）DOM 对象
+        var width = shareContent.offsetWidth; //获取dom 宽度
+        var height = shareContent.offsetHeight; //获取dom 高度
+        var canvas = document.createElement("canvas"); //创建一个canvas节点
+        var scale = 2; //定义任意放大倍数 支持小数
+        canvas.width = width * scale; //定义canvas 宽度 * 缩放
+        canvas.height = height * scale; //定义canvas高度 *缩放
+        canvas.getContext("2d").scale(scale, scale); //获取context,设置scale 
+        var opts = {
+            scale: scale, // 添加的scale 参数
+            canvas: canvas, //自定义 canvas
+            // logging: true, //日志开关，便于查看html2canvas的内部执行流程
+            width: width, //dom 原始宽度
+            height: height,
+            useCORS: true // 【重要】开启跨域配置
+        };
+
+        html2canvas(shareContent, opts).then(function (canvas) {
+
+            var context = canvas.getContext('2d');
+            // 【重要】关闭抗锯齿
+            context.mozImageSmoothingEnabled = false;
+            context.webkitImageSmoothingEnabled = false;
+            context.msImageSmoothingEnabled = false;
+            context.imageSmoothingEnabled = false;
+            
+            // 【重要】默认转化的格式为png,也可设置为其他格式
+            var img = Canvas2Image.convertToJPEG(canvas, canvas.width, canvas.height);
+
+            document.body.appendChild(img);
+
+            $(img).css({
+                "width": canvas.width / 2 + "px",
+                "height": canvas.height / 2 + "px",
+            }).addClass('f-full');
+
+        });
+      }
+      dom元素样式：
+      .targetElem {width: 54px;height: 142px;margin-top:2px;margin-left:17px;transform: scale(0.5)}
+    */
+    html2canvas(document.getElementById('view'), { useCORS: true }).then(function(canvas) {
+      document.body.appendChild(canvas);
+    });
+  }
+  </script>
+  <body>
+      <div id="view">
+          html-cavans-test
+      </div>
+      <div class="doIt" onclick="takeScreenshot()">点击截图</div>
+  </body>
+</html>
