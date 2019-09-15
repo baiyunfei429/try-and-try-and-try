@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<li lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>点击上传图片</title>
+    <link rel="stylesheet" href="../base.css">
+    <script src="../lib/jquery-3.4.1.slim.min.js"></script>
+    <style type="text/css">
+
+    </style>
+  </head>
+
+  <body>
+
+    <div>
+      <input id="imgPicker" type="file" />
+      <img id="preview" />
+    </div>
+
+    <script type="text/javascript">
+      document
+        .querySelector('#imgPicker')
+        .addEventListener('change', function () {
+          //当没选中图片时，清除预览
+          if (this.files.length === 0) {
+            document.querySelector('#preview').src = '';
+            return;
+          }
+
+          //实例化一个FileReader
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+            console.log(e)
+            console.log(e.target)
+            console.log(e.target.result)
+            //当reader加载时，把图片的内容赋值给
+            document.querySelector('#preview').src = e.target.result; // base64数据
+          };
+
+          console.log(this.files[0])
+          // 注意要先设置回调再读取文件
+          // 读取选中的图片，并转换成dataURL格式
+          reader.readAsDataURL(this.files[0]);
+        }, false);
+    </script>
+
+  </body>
+
+</li>

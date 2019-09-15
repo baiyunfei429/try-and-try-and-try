@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title> New Document </title>
+	<style>
+		form {
+			position: relative;
+		}
+
+		.upload {
+			background: #000;
+			color: #fff;
+			width: 100px;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			cursor: pointer;
+		}
+
+		input {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 30px;
+			width: 100px;
+			opacity: 0;
+			filter: alpha(opacity=0);
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<p>转载自：https://www.cnblogs.com/tugenhua0707/p/3568134.html</p>
+	<form enctype="multipart/form-data" name="form1">
+		<input id="f" type="file" name="f" onchange="change()" />
+		<div class="upload">上传图片</div>
+		<p>预览:</p>
+		<p>
+			<img id="preview" alt="" name="pic" />
+		</p>
+	</form>
+
+	<script>
+		/*
+			
+			JS兼容各个浏览器的本地图片上传即时预览效果
+
+			很早以前 在工作曾经碰到这么一个需求，当时也是纠结了很久，也是google了很久，没有碰到合适的demo，
+      今天特意研究了下这方面的的问题，所以也就做了个简单的demo来实现 本地上传图片即时预览效果。
+      其在标准浏览器(firefox,chrome，IE10等其他浏览器)用了HTML5中的内容实现图片即时预览效果。
+      在IE10以下浏览器用了滤镜来解决图片显示问题。在看代码之前，先让我们来了解以下知识点：
+
+			HTML5中的FileReader对象： FileReader对象主要是把文件读入内存中，并且读取文件中数据。
+      目前为止，firefox3.6+ chrome6+ Safari5.2+ Opera11+及IE10浏览器支持FileReader对象。
+      它有以下5种方法：
+        1. readBinaryString 
+        2. readAsText
+        3. readAsDataURL  将对象或文件中的数据读取为一串DataURL字符串，就是将数据以一种特殊格式的URL地址形式直接读入页面。
+        4. readAsArrayBuffer
+        5. abort.
+
+			而我们现在要用的是第三种，所以解释了下，其他的具体可以看相关的资料，这里不多解释。
+
+			IE：document.selection    即资料解释如下：
+
+			selection   对象 代表了当前激活选中区，即高亮文本块，和/或文档中用户可执行某些操作的其它元素。 
+			selection   对象的典型用途是作为用户的输入，以便识别正在对文档的哪一部分正在处理，或者作为某一操作的结果输出给用户。 
+
+			用户和脚本都可以创建选中区。用户创建选中区的办法是拖曳文档的一部分。
+      脚本创建选中区的办法是在文本区域或类似对象上调用   select   方法。
+      要获取当前选中区，请对   document   对象应用   selection   关键字。
+      要对选中区执行操作，请先用   createRange   方法从选中区创建一个文本区域对象。 
+			一个文档同一时间只能有一个选中区。选中区的类型决定了其中为空或者包含文本和/或元素块。
+      尽管空的选中区不包含任何内容，你仍然可以用它作为文档中的位置标志。
+		*/
+		function change() {
+			var pic = document.getElementById("preview"),
+				file = document.getElementById("f");
+
+			var ext = file.value.substring(file.value.lastIndexOf(".") + 1).toLowerCase();
+
+			// gif在IE浏览器暂时无法显示
+			if (ext != 'png' && ext != 'jpg' && ext != 'jpeg') {
+				alert("图片的格式必须为png或者jpg或者jpeg格式！");
+				return;
+			}
+			var isIE = navigator.userAgent.match(/MSIE/) != null,
+				isIE6 = navigator.userAgent.match(/MSIE 6.0/) != null;
+
+			if (isIE) {
+				file.select();
+				var reallocalpath = document.selection.createRange().text;
+
+				// IE6浏览器设置img的src为本地路径可以直接显示图片
+				if (isIE6) {
+					pic.src = reallocalpath;
+				} else {
+					// 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+					pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" +
+						reallocalpath + "\")";
+					// 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+					pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+				}
+			} else {
+				html5Reader(file);
+			}
+		}
+
+		function html5Reader(file) {
+			var file = file.files[0];
+			var reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = function (e) {
+				var pic = document.getElementById("preview");
+				pic.src = this.result;
+			}
+		}
+	</script>
+</body>
+
+</html>
