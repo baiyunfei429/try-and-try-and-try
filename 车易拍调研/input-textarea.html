@@ -10,24 +10,64 @@
     .input-wrap {
       padding: 30px;
     }
-    input {
+    .input-name {
       border: 1px solid #aaa;
     }
-    button {
+    .text-area-wrap {
+      height: 156px;
+      width: 440px;;
       border: 1px solid #aaa;
+      padding: 0;
+      margin-left: 100px;
+      padding-bottom: 20px; 
+      position: relative;
+    }
+    .text-area {
+      border: 0;
+      resize: none;
+      position: absolute;
+      right: 0px;
+      bottom: 20px;
+    }
+    .text-area-num {
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+      color: #aaa;
+    }
+    button {
+      padding: 20px 40px;
+      margin: 20px;
+      border: 1px solid #aaa;
+    }
+    #forPrint {
+      padding: 20px;
+      border: 1px solid #aaa;
+      background: #eee;
     }
   </style>
 </head>
 <body>
   <div class="input-wrap">
     请输入姓名(自动变大写)：
-    <input type="text" id="fname" onchange="upperCase(this.id)" >
+    <input class="input-name" type="text" id="fname" onchange="upperCase(this.id)" >
   </div>
-  <div class="input-wrap">
-    <textarea name="" id="textareaid" cols="30" rows="10" oninput="textAreaHandle()"></textarea>
-    <button onclick="textAreaHandle()">输出textarea里面的东西</button>
+ 
+  <div class="text-area-wrap">
+    <textarea 
+      class="text-area" 
+      id="textareaid" 
+      cols="70" 
+      oninput="textAreaHandle()"
+      maxlength="300"
+      rows="10"
+      placeholder="最多输入300个汉字"
+    ></textarea>
+    <span id="textAreaNum" class="text-area-num">0/300</span>
   </div>
+  <button onclick="printTextArea()">输出textarea里面的东西</button>
 
+  <div id="forPrint">用来输出textarea里面的东西</div>
   <script type="text/javascript">
     function upperCase(x) {
       var y=document.getElementById(x).value
@@ -49,10 +89,19 @@
         修改了 select 元素的选中项，selectedIndex 属性发生变化。
       在监听到 onpropertychange 事件后，可以使用 event 的 propertyName 属性来获取发生变化的属性名称。
       */
+      var textAreaValue = document.getElementById('textareaid').value;
+      var textAreaNum = document.getElementById('textAreaNum');
+      textAreaNum.innerHTML = textAreaValue.length + '/300';
+
+    }
+    function printTextArea() {
+      var str = '';
       var arr = textareaid.value.split("\n");
       for(var idx in arr) {
         console.log(idx + '、' + arr[idx]);
+        str += idx + '、' + arr[idx] + '<br/>';
       }
+      document.getElementById('forPrint').innerHTML = str;
     }
     </script>
 </body>
