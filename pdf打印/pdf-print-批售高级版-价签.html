@@ -73,7 +73,7 @@
       background: #f00;
     }
     .bottom {
-      height: 393px;
+      height: 292px;
       width: 100%;
       background: #0f0;
       /* position: absolute; */
@@ -84,9 +84,10 @@
     @media print { 
       @page { 
         /* 设置为横向打印 */ 
-        /* size: landscape; */
+        size: landscape;
       }
       body {
+        /* 设置为彩印，背景色 */ 
         -webkit-print-color-adjust: exact;
         -moz-print-color-adjust: exact;
         -ms-print-color-adjust: exact;
@@ -375,6 +376,8 @@
               <img src="image.png" 
                 onError="this.onerror=null;this.src='/images/noimage.gif';"  
                 onAbort="window.alert('注意:这张照片含有重要的链接,请重新载入.')"/>
+                onAbort：图片加载的时候，用户通过点击停止加载（浏览器上的红色叉叉）时出发，
+                通常在这里触发一个提示：“图片正在加载”
             */
             imgStart++;
             IfLoadImg();

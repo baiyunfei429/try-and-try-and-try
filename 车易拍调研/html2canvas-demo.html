@@ -86,7 +86,10 @@
       dom元素样式：
       .targetElem {width: 54px;height: 142px;margin-top:2px;margin-left:17px;transform: scale(0.5)}
     */
-    html2canvas(document.getElementById('view'), { useCORS: true }).then(function(canvas) {
+    html2canvas(document.getElementById('view'), { 
+      useCORS: true //处理图片跨域
+    }).then(function(canvas) {
+      console.log(canvas.toDataURL("image/png"));
       document.body.appendChild(canvas);
     });
   }

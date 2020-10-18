@@ -19,11 +19,12 @@
            console.log('websocket close');
          }
          websocket.onmessage = function(e){
-             console.log(e.data);
+             console.log('ws-onmessage: ' + e.data);
              document.getElementById("recv").innerHTML = e.data;
          }
          document.getElementById("sendBtn").onclick = function(){
              var txt = document.getElementById("sendTxt").value;
+             console.log('ws-send: ' + txt);
              websocket.send(txt);
          }
  
